@@ -1,16 +1,23 @@
 <?php
 
-class Conexao 
-{
-     static function getConnection(){
-          $conexao = 
-          new mysqli("localhost", "root", "", "db_catalogo_3e1",3366);
+    class Conexao{
+        static $host = '127.0.0.1';
+        static $user = 'root';
+        static $pass = 'info';
+        static $database = 'db_catalogo';
+        static $port = '3306';
+        static $con;
 
-         if($conexao->connect_error){
-         echo $conexao->connect_error;
-         die(); 
-         }
-         return $conexao;
-     }
-}
+        public static function getConnection(){
+            if(!self::$con){
+                self::$con = new mysqli(self::$host, self::$user, self::$pass, self::$database, self::$port);
+                if(self::$con->connect_error){
+                    echo "Ocorreu um erro:" . self::$con->connect_error;
+                    die();
+                }
+            }
+            return self::$con;
+        }
+    }
+
 ?>
